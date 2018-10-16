@@ -54,9 +54,20 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
                 ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION }, TAKE_PHOTO_PERMISSION);
         }
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+        if (ContextCompat.checkSelfPermission(this,
+                (android.Manifest.permission.ACCESS_FINE_LOCATION) )
+                == PackageManager.PERMISSION_GRANTED) {
+            Log.e("yeah", "yes");
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            Log.e("yeah", "yes2");
+        }
+        //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
+        Log.e("location", "1");
         // Add code here to register the listener with the Location Manager to receive location updates
 
 
@@ -64,6 +75,7 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        Log.e("yeah", "yes3");
         // Add code here to do stuff when the location changes
         latTextView.setText(String.valueOf(location.getLatitude()));
         lonTextView.setText(String.valueOf(location.getLongitude()));

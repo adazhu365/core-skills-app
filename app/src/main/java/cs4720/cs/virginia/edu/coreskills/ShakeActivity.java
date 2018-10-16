@@ -65,16 +65,21 @@ public class ShakeActivity extends AppCompatActivity implements SensorEventListe
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-            long curTime = System.currentTimeMillis();
+        shakeCountTextView = findViewById(R.id.shakeCountTextView);
+        float k = event.values[0] + event.values[1] + event.values[2];
+        if(k > 5) {
             // only allow one update every 100ms.
 
-            Log.d("sensor", "shake detected w/ speed: ");
-            Toast.makeText(this, "shake detected w/ speed: " ,Toast.LENGTH_SHORT).show();
+            Log.e("sensor", "shake detected w/ speed: " + k);
+            Toast.makeText(this, "shake detected w/ speed: " + k, Toast.LENGTH_SHORT).show();
 
 
+            mShakeCount += 1;
+            Log.e("yeah", "shake" + mShakeCount);
+            String count = "Shake Count: " + mShakeCount;
 
-        mShakeCount +=1;
-        shakeCountTextView.setText(mShakeCount);
+            shakeCountTextView.setText(count);
+        }
         // Add code here to handle what happens when a sensor event occurs.
 
     }
