@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+
 /**
 
 Assignment Notes: For this activity, we are embedding the LocationListener
@@ -53,25 +54,31 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
                 ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION }, TAKE_PHOTO_PERMISSION);
         }
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
         // Add code here to register the listener with the Location Manager to receive location updates
 
 
     }
 
-
     @Override
     public void onLocationChanged(Location location) {
         // Add code here to do stuff when the location changes
-
+        latTextView.setText(String.valueOf(location.getLatitude()));
+        lonTextView.setText(String.valueOf(location.getLongitude()));
     }
 
     @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {}
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+    }
 
     @Override
-    public void onProviderEnabled(String s) {}
+    public void onProviderEnabled(String s) {
+    }
 
     @Override
-    public void onProviderDisabled(String s) {}
+    public void onProviderDisabled(String s) {
+    }
+
 }

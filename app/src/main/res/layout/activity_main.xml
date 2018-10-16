@@ -83,7 +83,7 @@
         android:onClick="openSharedPreferences" />
 
     <TextView
-        android:text="Student 1 Name / Computing ID"
+        android:text="Siteng Zhang / sz4dd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

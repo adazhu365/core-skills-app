@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -37,13 +38,15 @@ public class AccelerometerActivity extends AppCompatActivity implements SensorEv
         xTextView = (TextView)findViewById(R.id.xTextView);
         yTextView = (TextView)findViewById(R.id.yTextView);
         zTextView = (TextView)findViewById(R.id.zTextView);
-
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         // Initialize your sensorManager and listeners here
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        sensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         // Add a line to register the Session Manager Listener
     }
 
@@ -51,6 +54,7 @@ public class AccelerometerActivity extends AppCompatActivity implements SensorEv
     public void onPause() {
         // Add the following line to unregister the Sensor Manager
         super.onPause();
+        sensorManager.unregisterListener(this);
     }
 
 
@@ -61,6 +65,11 @@ public class AccelerometerActivity extends AppCompatActivity implements SensorEv
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        // Add code here to update the screen
+        xTextView.setText(String.valueOf(event.values[0]));
+        yTextView.setText(String.valueOf(event.values[1]));
+        zTextView.setText(String.valueOf(event.values[2]));
     }
+
+        // Add code here to update the screen
+
 }

@@ -7,7 +7,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
 
@@ -35,7 +37,8 @@ public class ShakeActivity extends AppCompatActivity implements SensorEventListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shake);
-
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         // Add code to intialize the sensorManager and accelerometer
 
     }
@@ -43,6 +46,7 @@ public class ShakeActivity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onResume() {
         super.onResume();
+        sensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         // Add a line to register the Session Manager Listener
 
     }
@@ -50,7 +54,7 @@ public class ShakeActivity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onPause() {
         // Add a line to unregister the Sensor Manager
-
+        sensorManager.unregisterListener(this);
         super.onPause();
     }
 
@@ -61,7 +65,16 @@ public class ShakeActivity extends AppCompatActivity implements SensorEventListe
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+            long curTime = System.currentTimeMillis();
+            // only allow one update every 100ms.
 
+            Log.d("sensor", "shake detected w/ speed: ");
+            Toast.makeText(this, "shake detected w/ speed: " ,Toast.LENGTH_SHORT).show();
+
+
+
+        mShakeCount +=1;
+        shakeCountTextView.setText(mShakeCount);
         // Add code here to handle what happens when a sensor event occurs.
 
     }
