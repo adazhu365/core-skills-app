@@ -50,45 +50,7 @@ public class SharedPreferencesActivity extends AppCompatActivity {
     }
 
     public void saveToSharedPreferences(View view) {
-        DatabaseHelper mDbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        String compid = spnameEditText.getText().toString();
-        String name = spcompIDEditText.getText().toString();
-        values.put("compid", compid);
-        values.put("name", name);
-        long newRowId;
-        newRowId = db.insert(
-                "person",
-                null,
-                values);
 
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                "compid",
-                "name"
-        };
-
-        // How you want the results sorted in the resulting Cursor
-        String sortOrder =
-                "compid" + " DESC";
-
-        Cursor cursor = db.query(
-                "person",  // The table to query
-                projection,                               // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
-        );
-        while(cursor.moveToNext()) {
-            String currID = cursor.getString(
-                    cursor.getColumnIndexOrThrow("compid")
-            );
-            Log.i("DBData", currID);
-        }
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("name", spnameEditText.getText().toString());
@@ -104,15 +66,7 @@ public class SharedPreferencesActivity extends AppCompatActivity {
     }
 
     public void loadFromSharedPreferences(View view) {
-        //SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        //SharedPreferences.Editor editor = settings.edit();
-        //editor.putString("name", spnameEditText.getText().toString());
-        //editor.putString("compid", spcompIDEditText.getText().toString());
 
-        // Commit the edits!
-        //editor.commit();
-        //spnameEditText.setText(spnameTextView.getText());
-        //spcompIDEditText.setText(spcompIDTextView.getText());
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         spnameEditText.setText(settings.getString("name", "none"));
         spcompIDEditText.setText(settings.getString("compid", "none"));
