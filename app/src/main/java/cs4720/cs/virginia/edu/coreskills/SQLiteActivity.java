@@ -49,6 +49,13 @@ public class SQLiteActivity extends AppCompatActivity {
 
     public void saveToDatabase(View view) {
         // Add code here to save to the database
+        DatabaseHelper mDbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        String compid = nameEditText.getText().toString();
+        String name = compIDEditText.getText().toString();
+        values.put("compid", compid);
+        values.put("name", name);
 
     }
 
