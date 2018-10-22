@@ -63,13 +63,6 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             Log.e("yeah", "yes2");
         }
-        //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-
-        Log.e("location", "1");
-        // Add code here to register the listener with the Location Manager to receive location updates
-
 
     }
 

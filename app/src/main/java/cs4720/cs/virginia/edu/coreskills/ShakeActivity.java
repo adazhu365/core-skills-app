@@ -32,6 +32,7 @@ public class ShakeActivity extends AppCompatActivity implements SensorEventListe
 
     private int mShakeCount = 0;
     TextView shakeCountTextView;
+    private long lastupdate = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,9 @@ public class ShakeActivity extends AppCompatActivity implements SensorEventListe
     public void onSensorChanged(SensorEvent event) {
         shakeCountTextView = findViewById(R.id.shakeCountTextView);
         float k = event.values[0] + event.values[1] + event.values[2];
-        if(k > 5) {
+        long currentTime = System.currentTimeMillis();
+        if(k > 5 && currentTime - lastupdate >= 100) {
+            lastupdate = currentTime;
             // only allow one update every 100ms.
 
             Log.e("sensor", "shake detected w/ speed: " + k);
