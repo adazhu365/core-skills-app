@@ -6,3 +6,6 @@ For more information about this assignment, please see http://cs4720.cs.virginia
 Team Member:
 Siteng Zhang, sz4dd
 
+Additional Requirement for running:
+For the GPS task, if clicking start GPS results in pop up message of "allowing permission", place click start GPS again after selecting allow. 
+
