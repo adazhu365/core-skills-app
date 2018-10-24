@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.FirebaseDatabase;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,6 +39,7 @@ public class WebServiceActivity extends AppCompatActivity {
 
     public static final String BASE_URL = "http://stardock.cs.virginia.edu/louslist/Courses/view/";
 
+
     EditText courseEditText;
     TextView courseNameTextView;
     TextView instructorTextView;
@@ -50,9 +56,44 @@ public class WebServiceActivity extends AppCompatActivity {
         locationTextView = (TextView) findViewById(R.id.locationTextView);
     }
 
+
     public void downloadData(View view) {
 
         // Add your code here to download the data and update the screen
 
+        LousListAPIInterface apiService =
+                LousListAPIClient.getClient().create(LousListAPIInterface.class);
+
+       // EditText mnemonic = (EditText)findViewById(R.id.editText);
+
+        String [] mnemonicSearch = courseEditText.getText().toString().split(" ");
+
+        Call<List<Section>> call = apiService.sectionList(mnemonicSearch[0], mnemonicSearch[1]);
+
+        call.enqueue(new Callback<List<Section>>() {
+            @Override
+            public void onResponse(Call<List<Section>> call, Response<List<Section>> response) {
+                List<Section> sections = response.body();
+                String courseDisplay = "";
+//                for(Section s : sections) {
+//                    Log.d("LousList", "Received: " + s);
+//                    courseDisplay += s + "\n";
+//                }
+                //TextView display = (TextView)findViewById(R.id.textview);
+                //display.setText(courseDisplay);
+
+                 Section s = sections.get(0);
+
+                courseNameTextView.setText( s.getCourseName());
+                instructorTextView.setText(s.getInstructor());
+                locationTextView.setText(s.getLocation());
+            }
+
+            @Override
+            public void onFailure(Call<List<Section>> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("LousList", t.toString());
+            }
+        });
     }
 }

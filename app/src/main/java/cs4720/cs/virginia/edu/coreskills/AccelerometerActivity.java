@@ -21,6 +21,8 @@ https://github.com/marksherriff/SensorExample
 
 */
 
+
+
 public class AccelerometerActivity extends AppCompatActivity implements SensorEventListener {
 
     SensorManager sensorManager;

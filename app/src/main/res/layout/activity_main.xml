@@ -91,19 +91,21 @@
         android:id="@+id/studentOneTextView" />
 
     <TextView
-        android:text="Student 2 Name / Computing ID"
+        android:id="@+id/studentTwoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/studentTwoTextView"
         android:layout_below="@+id/studentOneTextView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Guangda Zhu/ gx6xw" />
 
     <TextView
-        android:text="Team Name"
+        android:id="@+id/teamTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/studentTwoTextView"
         android:layout_centerHorizontal="true"
-        android:id="@+id/teamTextView" />
+        android:text="Zhangzhu" />
+
+
 
 </RelativeLayout>

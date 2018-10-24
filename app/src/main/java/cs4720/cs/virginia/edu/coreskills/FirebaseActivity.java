@@ -35,6 +35,8 @@ public class FirebaseActivity extends AppCompatActivity {
     TextView instructorTextView;
     TextView locationTextView;
 
+    private DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,33 @@ public class FirebaseActivity extends AppCompatActivity {
         courseNameTextView = (TextView) findViewById(R.id.fbcourseNameTextView);
         instructorTextView = (TextView) findViewById(R.id.fbinstructorTextView);
         locationTextView = (TextView) findViewById(R.id.fblocationTextView);
-
     }
 
     public void downloadFirebaseData(View view) {
         // Add code here to pull the data from Firebase
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                Section post = dataSnapshot.getValue(Section.class);
+                courseNameTextView.setText( post.getCourseName());
+                instructorTextView.setText(post.getInstructor());
+                locationTextView.setText(post.getLocation());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("cancel", "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+        String[] ref = this.courseEditText.getText().toString().split(" ");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference(ref[0]+"/"+ref[1]);
+
+        mDatabase.addValueEventListener(postListener);
 
 
     }
